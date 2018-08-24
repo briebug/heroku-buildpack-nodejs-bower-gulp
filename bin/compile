@@ -62,8 +62,8 @@ if [ -d $cache_dir/node/vendor/nasm ]; then
   cp -r $cache_dir/node/vendor/nasm $vendor_dir
 else
   status "Installing nasm from source"
-  NVERSION="2.11"
-  curl http://www.nasm.us/pub/nasm/releasebuilds/$NVERSION/nasm-$NVERSION.tar.gz -s | tar xf
+  NVERSION="2.14rc15"
+  curl http://www.nasm.us/pub/nasm/releasebuilds/$NVERSION/nasm-$NVERSION.tar.gz -s | tar x
   cd nasm-$NVERSION
   ./configure >/dev/null 2>&1 && make >/dev/null 2>&1
   
