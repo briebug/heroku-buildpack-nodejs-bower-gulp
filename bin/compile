@@ -63,7 +63,7 @@ if [ -d $cache_dir/node/vendor/nasm ]; then
 else
   status "Installing nasm from source"
   NVERSION="2.11"
-  curl http://www.nasm.us/pub/nasm/releasebuilds/$NVERSION/nasm-$NVERSION.tar.gz -s | tar xz
+  curl http://www.nasm.us/pub/nasm/releasebuilds/$NVERSION/nasm-$NVERSION.tar.gz -s | tar xf
   cd nasm-$NVERSION
   ./configure >/dev/null 2>&1 && make >/dev/null 2>&1
   
