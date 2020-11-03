@@ -80,35 +80,35 @@ cd $build_dir
 
 # If node_modules directory is checked into source control then
 # rebuild any native deps. Otherwise, restore from the build cache.
-if [ -d $build_dir/node_modules ]; then
-  status "Found existing node_modules directory; skipping cache"
-  status "Rebuilding any native dependencies"
-  npm rebuild 2>&1 | indent
-elif [ -d $cache_dir/node/node_modules ]; then
-  status "Restoring node_modules directory from cache"
-  cp -r $cache_dir/node/node_modules $build_dir/
+#if [ -d $build_dir/node_modules ]; then
+#  status "Found existing node_modules directory; skipping cache"
+#  status "Rebuilding any native dependencies"
+#  npm rebuild 2>&1 | indent
+#elif [ -d $cache_dir/node/node_modules ]; then
+#  status "Restoring node_modules directory from cache"
+#  cp -r $cache_dir/node/node_modules $build_dir/
 
-  status "Pruning cached dependencies not specified in package.json"
-  npm prune 2>&1 | indent
-  
-  #prune will delete the bower / gulp modules, this adds it back
-  if [ -d $cache_dir/node/node_modules/bower ]; then
-    status "Copying bower from cache"
-    cp -r $cache_dir/node/node_modules/bower $build_dir/node_modules
-    cp -r $cache_dir/node/node_modules/.bin/bower $build_dir/node_modules/.bin
-  fi
-  if [ -d $cache_dir/node/node_modules/gulp ]; then
-  status "Copying gulp from cache"
-    cp -r $cache_dir/node/node_modules/gulp $build_dir/node_modules
-    cp -r $cache_dir/node/node_modules/.bin/gulp $build_dir/node_modules/.bin
-  fi
+#  status "Pruning cached dependencies not specified in package.json"
+#  npm prune 2>&1 | indent
 
-  if [ -f $cache_dir/node/.heroku/node-version ] && [ $(cat $cache_dir/node/.heroku/node-version) != "$node_version" ]; then
-    status "Node version changed since last build; rebuilding dependencies"
-    npm rebuild 2>&1 | indent
-  fi
+#  #prune will delete the bower / gulp modules, this adds it back
+#  if [ -d $cache_dir/node/node_modules/bower ]; then
+#    status "Copying bower from cache"
+#    cp -r $cache_dir/node/node_modules/bower $build_dir/node_modules
+#    cp -r $cache_dir/node/node_modules/.bin/bower $build_dir/node_modules/.bin
+#  fi
+#  if [ -d $cache_dir/node/node_modules/gulp ]; then
+#  status "Copying gulp from cache"
+#    cp -r $cache_dir/node/node_modules/gulp $build_dir/node_modules
+#    cp -r $cache_dir/node/node_modules/.bin/gulp $build_dir/node_modules/.bin
+#  fi
 
-fi
+#  if [ -f $cache_dir/node/.heroku/node-version ] && [ $(cat $cache_dir/node/.heroku/node-version) != "$node_version" ]; then
+#    status "Node version changed since last build; rebuilding dependencies"
+#    npm rebuild 2>&1 | indent
+#  fi
+
+#fi
 
 # Decide if we will be looking at bower dependencies as well
 if [ -f $build_dir/bower.json ]; then
@@ -132,15 +132,15 @@ if [ -f $build_dir/bower.json ]; then
 
   # Copy cached bower_components back into the build tree and prune unless
   # the directory is checked in already
-  if [ -d $build/$bower_dir ]; then
-    status "Found existing $bower_dir directory; skipping bower cache"
-  elif [ -d $cache_dir/node/bower_components ]; then
-    status "Restoring $bower_dir directory from cache"
-    cp -r $cache_dir/node/bower_components $build_dir/$bower_dir
+  # if [ -d $build/$bower_dir ]; then
+  #   status "Found existing $bower_dir directory; skipping bower cache"
+  # elif [ -d $cache_dir/node/bower_components ]; then
+  #   status "Restoring $bower_dir directory from cache"
+  #   cp -r $cache_dir/node/bower_components $build_dir/$bower_dir
 
-    status "Pruning cached dependencies not specified in bower.json"
-    node_modules/.bin/bower prune 2>&1 | indent
-  fi
+  #   status "Pruning cached dependencies not specified in bower.json"
+  #   node_modules/.bin/bower prune 2>&1 | indent
+  # fi
 
 fi
 
